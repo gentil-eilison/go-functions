@@ -6,10 +6,14 @@ type transformFunction func(int) int
 
 func main() {
 	numbers := []int{1, 2, 3, 4}
-	doubledNumbers := transformNumbers(&numbers, func(number int) int {
-		return number * 2
-	})
-	fmt.Println((doubledNumbers))
+	double := createTransformer(2)
+	triple := createTransformer(3)
+	doubledNumbers := transformNumbers(&numbers, double)
+	tripledNumbers := transformNumbers(&numbers, triple)
+
+	fmt.Println(numbers)
+	fmt.Println(doubledNumbers)
+	fmt.Println(tripledNumbers)
 }
 
 func transformNumbers(numbers *[]int, transform transformFunction) []int {
@@ -19,4 +23,10 @@ func transformNumbers(numbers *[]int, transform transformFunction) []int {
 		transformedNumbers = append(transformedNumbers, transform(number))
 	}
 	return transformedNumbers
+}
+
+func createTransformer(factor int) transformFunction {
+	return func(number int) int {
+		return number * factor
+	}
 }
